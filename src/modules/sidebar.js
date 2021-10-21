@@ -62,7 +62,7 @@ function createHome(){
     home.classList.add("project")
     home.textContent = "Home"
     buttonAddEventListener(home)
-    
+    setActive(home)
     projectBox.append(home)
 }
 
