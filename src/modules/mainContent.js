@@ -1,8 +1,7 @@
 import { format, subDays } from "date-fns"
 
 const mainContent = document.querySelector(".main-content")
-const taskBox = document.createElement("div")
-taskBox.id = "task-box"
+
 
 let today = new Date()
 today = format(today, "yyyy-MM-dd")
@@ -10,6 +9,17 @@ today = format(today, "yyyy-MM-dd")
 
 export function initMainContent(){
     createListForm()
+    createTaskbox()
+}
+
+function createTaskbox(){
+    const taskBox = document.createElement("div")
+    const taskHeader = document.createElement("h2")
+    taskHeader.textContent = "Tasks"
+
+    taskBox.id = "task-box"
+
+    taskBox.appendChild(taskHeader)
     mainContent.appendChild(taskBox)
 }
 
@@ -21,7 +31,7 @@ function createListForm(){
     textField.name = "title"
     textField.type = "text"
     textField.id = "task-input-field"
-    textField.placeholder = "Task"
+    textField.placeholder = "Enter Task"
     textField.required = true
     
     const deadline = document.createElement("input")
@@ -33,12 +43,13 @@ function createListForm(){
     submitButton.name = "submitButton"
     submitButton.type = "submit"
     submitButton.value = "Create"
-    submitButton.id = "project-submit-button"
+    submitButton.id = "task-submit-button"
 
     submitButton.addEventListener("click", e => {
         e.preventDefault()
         const inputField = document.querySelector("#task-input-field")
         const taskDeadline = document.querySelector("#task-deadline")
+        const taskBox = document.querySelector("#task-box")
         
         const taskTitle = inputField.value 
         if(taskTitle.length === 0 || taskTitle.length>70){
