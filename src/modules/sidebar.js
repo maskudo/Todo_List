@@ -5,6 +5,7 @@ projectBox.id = "project-box"
 export function initSidebar(){
     createProjectForm()
     createHeader()
+    createHome()
     sidebar.append(projectBox)
 }
 function createHeader(){
@@ -44,6 +45,7 @@ function createProjectForm(){
         const button = document.createElement("button")
         button.classList.add("project")
         button.textContent = projectName
+        buttonAddEventListener(button)
         inputField.value = ""
         projectBox.append(button)
     })
@@ -52,4 +54,30 @@ function createProjectForm(){
     form.appendChild(submitButton)
 
     sidebar.appendChild(form)
+}
+
+function createHome(){
+    const home = document.createElement("button")
+    home.id = "home"
+    home.classList.add("project")
+    home.textContent = "Home"
+    buttonAddEventListener(home)
+    
+    projectBox.append(home)
+}
+
+function setActive(activeButton){
+    const projectButtons = document.querySelectorAll(".project")
+    projectButtons.forEach(button =>{
+        if(button.classList.contains("active")){
+            button.classList.remove("active")
+        }
+    })
+    activeButton.classList.add("active")
+}
+
+function buttonAddEventListener(button){
+    button.addEventListener("click",() => {
+        setActive(button)
+    })
 }
