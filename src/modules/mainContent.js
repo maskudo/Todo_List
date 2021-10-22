@@ -1,4 +1,5 @@
 import { format, subDays } from "date-fns"
+import { da } from "date-fns/locale"
 
 const mainContent = document.querySelector(".main-content")
 
@@ -47,28 +48,49 @@ function createListForm(){
 
     submitButton.addEventListener("click", e => {
         e.preventDefault()
-        const inputField = document.querySelector("#task-input-field")
-        const taskDeadline = document.querySelector("#task-deadline")
-        const taskBox = document.querySelector("#task-box")
-        
-        const taskTitle = inputField.value 
-        if(taskTitle.length === 0 || taskTitle.length>70){
-            alert("Task title length should be between 1 and 70")
-            return
-        }
-        if(!taskDeadline.value){
-            taskDeadline.value = today
-        }
-
-        const button = document.createElement("button")
-        button.classList.add("task")
-        button.textContent = `${taskTitle}: ${taskDeadline.value}`
-        inputField.value = ""
-        taskBox.append(button)
+        createTaskButton()
     })
     
     form.appendChild(textField)
     form.appendChild(deadline)
     form.appendChild(submitButton)
     mainContent.append(form)
+}
+function createTaskButton(){
+    const inputField = document.querySelector("#task-input-field")
+    const taskDeadline = document.querySelector("#task-deadline")
+    const taskBox = document.querySelector("#task-box")
+    
+    const taskTitle = inputField.value 
+    if(taskTitle.length === 0 || taskTitle.length>70){
+        alert("Task title length should be between 1 and 70")
+        return
+    }
+    if(!taskDeadline.value){
+        taskDeadline.value = today
+    }
+
+    const button = document.createElement("button")
+    const leftSide = document.createElement("div")
+    const rightSide = document.createElement("div")
+    const date = document.createElement("p")
+    const cross  =document.createElement("button")
+
+    cross.textContent = "X"
+    date.textContent = taskDeadline.value
+    leftSide.textContent = taskTitle
+    leftSide.classList.add("task-button-left-side")
+    rightSide.classList.add("task-button-right-side")
+    button.classList.add("task")
+    inputField.value = ""
+
+    cross.addEventListener("click", () => {
+        button.remove()
+    })
+
+    rightSide.appendChild(date)
+    rightSide.appendChild(cross)
+    button.appendChild(leftSide)
+    button.appendChild(rightSide)
+    taskBox.append(button)
 }

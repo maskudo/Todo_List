@@ -36,18 +36,7 @@ function createProjectForm(){
     submitButton.id = "project-submit-button"
     submitButton.addEventListener("click",e=>{
         e.preventDefault()
-        const inputField = document.querySelector("#project-name-input-field")
-        const projectName = inputField.value 
-        if(projectName.length === 0 || projectBox.length>25){
-            alert("Project name length should be between 1 and 25")
-            return
-        }
-        const button = document.createElement("button")
-        button.classList.add("project")
-        button.textContent = projectName
-        buttonAddEventListener(button)
-        inputField.value = ""
-        projectBox.append(button)
+        createProjectButton()
     })
 
     form.appendChild(textField)
@@ -80,4 +69,31 @@ function buttonAddEventListener(button){
     button.addEventListener("click",() => {
         setActive(button)
     })
+}
+function createProjectButton(){
+    const inputField = document.querySelector("#project-name-input-field")
+        const projectName = inputField.value 
+        if(projectName.length === 0 || projectBox.length>25){
+            alert("Project name length should be between 1 and 25")
+            return
+        }
+        const button = document.createElement("button")
+        const leftSide = document.createElement("div")
+        const rightSide = document.createElement("button")
+
+        leftSide.textContent = `${projectName}`
+        leftSide.className = "project-button-left-side"
+        rightSide.textContent = "X"
+        rightSide.className = "project-button-right-side"
+        rightSide.addEventListener("click", () => {
+            button.remove()
+        })
+
+        button.classList.add("project")
+        buttonAddEventListener(button)
+        inputField.value = ""
+
+        button.append(leftSide)
+        button.append(rightSide)
+        projectBox.append(button)
 }
