@@ -1,6 +1,4 @@
 import { format, subDays } from "date-fns"
-import { da } from "date-fns/locale"
-
 const mainContent = document.querySelector(".main-content")
 
 
