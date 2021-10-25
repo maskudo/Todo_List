@@ -8,6 +8,7 @@ projectBox.id = "project-box"
 export function initSidebar(){
     createProjectForm()
     createHeader()
+    displayProjects()
     // createHome()
     sidebar.append(projectBox)
 }
