@@ -7,7 +7,7 @@ today = format(today, "yyyy-MM-dd")
 
 
 export function initMainContent(){
-    createListForm()
+    createAddTaskForm()
     createTaskbox()
 }
 
@@ -22,7 +22,7 @@ function createTaskbox(){
     mainContent.appendChild(taskBox)
 }
 
-function createListForm(){
+function createAddTaskForm(){
     const form = document.createElement("form")
     form.id = "task-form"
 
