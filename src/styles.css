@@ -53,6 +53,7 @@
 }
 .project-button-right-side{
     width: 20px;
+    border: solid black 1px;
 }
 .active{
     background-color: rgb(93, 120, 192);
