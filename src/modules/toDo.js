@@ -23,6 +23,7 @@ export default class TodoList{
         for(let i=0;i<this.projectList.length;i++){
             if(this.projectList[i].getName()===projectName){
                 this.projectList.splice(i,1)
+                localStorage.setItem('projectList',JSON.stringify(this.projectList))
             }
         }
     }
