@@ -39,7 +39,6 @@ function createAddTaskForm(){
     submitButton.addEventListener("click", e => {
         e.preventDefault()
         addTaskToProject()
-        //display task
     })
 }
 function addTaskToProject(){
@@ -95,7 +94,7 @@ export function displayTask(){
     let content = ""
     for(let i=0;i<taskList.length;i++){
         content+=`
-        <button class="task">
+        <button class="task" data-number = "${i}">
             <div class="task-button-left-side">${taskList[i].title}</div>
             <div class="task-button-right-side">
                 <div>${taskList[i].dueDate}</div>
@@ -105,4 +104,20 @@ export function displayTask(){
         `
     }
     taskBox.innerHTML = content
+    crossAddEventListener()
+
+}
+
+function crossAddEventListener(){
+    const activeProject = document.querySelector(".active")
+    const projectName = activeProject.querySelector(".project-button-left-side").textContent
+    const tasks = document.querySelectorAll(".task")
+    tasks.forEach((task) => {
+        const cross = task.querySelector(".cross")
+        cross.addEventListener("click",() => {
+            const taskNumber = task.dataset.number
+            TodoList.removeTask(projectName,taskNumber)
+            displayTask()
+        })
+    })
 }
