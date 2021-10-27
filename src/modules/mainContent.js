@@ -98,8 +98,8 @@ export function displayTask(){
         <button class="task">
             <div class="task-button-left-side">${taskList[i].title}</div>
             <div class="task-button-right-side">
-                <p>${taskList[i].dueDate}</p>
-                <p>X</p>
+                <div>${taskList[i].dueDate}</div>
+                <div class="cross">X</div>
             </div>
         </button>
         `
