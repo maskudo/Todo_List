@@ -4,23 +4,43 @@
     box-sizing: border-box;
 }
 .main-header{
-    font-size: 1.4rem;
-    padding: 1%;
+    background-color: #262a2b;
+    color: white;
+    height: 10vh;
+}
+.main-header h1{
+    font-size: 3rem;
     text-align: center;
-    border-bottom: solid black 1px;
-    background-color: antiquewhite;
+}
+.main-header i{
+    margin: 1%;
 }
 .main-body{
     display: flex;
-    min-height: 60vh;
+    min-height: 80vh;
+    color: #aaa1b7;
 }
 .cross{
     width: 20px;
-    border: solid black 1px;
+}
+footer{
+    height: 10vh;
+    font-size: 1.4rem;
+    color: white;
+    background-color: #262a2b;
+    text-align: center;
+    padding-top: 20px;
+}
+footer a:visited{
+    color: white;
+}
+footer a:hover{
+    color: gray;
 }
 /* sidebar */
 .sidebar{
-    background-color: gray;
+    background-color: #2b2f31;
+    color: white;
     flex-grow: 1;
 }
 #sidebar-header{
@@ -35,13 +55,23 @@
     margin: 2% 5%;
 }
 #project-name-input-field{
+    background-color: #181a1b;
+    color: white;
     font-size: 1.2rem;
     width: 90%;
     margin-bottom: 2%;
+    border: solid gray 1px;
+    border-radius: 2px;
 }
 #project-submit-button{
+    border: solid gray 1px;
+    background-color: #181a1b;
+    color: white;
     font-size: 1.2rem;
     width: 90%;
+}
+#project-submit-button:hover{
+    background-color: #2b2f31;
 }
 #project-box{
     display: flex;
@@ -50,37 +80,68 @@
     margin: 2% 5%;
 }
 .project{
-    font-size: 1.2rem;
+    background-color: #181a1b;
+    color: whitesmoke;
+    font-size: 1.3rem;
     width: 90%;
+    height: 40px;
+    padding: 4px 8px;
     display: flex;
     justify-content: space-between;
+    border: solid rgb(150, 149, 149) 0px;
+    border-radius: 5px;
+    margin: 1% auto;
 }
-/* .project-button-right-side{
-    width: 20px;
-    border: solid black 1px;
-} */
+.project:hover{
+    background-color: #262a2b;
+}
 
 .active{
-    background-color: rgb(93, 120, 192);
+    background-color: #222426;
+    color: white;
 }
 /* main content */
 
 .main-content{
-    background-color: rgb(181, 181, 241);
     flex-grow: 10;
+    background-color: #222426;
+    color: white;
 }
 #task-form{
     display: flex;
+    height: 7%;
     margin: 0.5% 3%;
+    justify-content: space-between;
 }
 #task-input-field{
+    background-color: #181a1b;
+    color: white;
+    border: solid gray 1px;
+    border-radius: 2px;
     width: 80%;
+    font-size: 1.3rem;
 }
 #task-deadline{
+    background-color: #181a1b;
+    color: white;
+    border: solid gray 1px;
+    border-radius: 2px;
     font-size: 20px;
+    margin: auto 5px;
+    height: 100%;
+}
+#task-deadline:hover{
+    border: solid #2b2f31 1px;
 }
 #task-submit-button{
+    background-color: #181a1b;
+    border: solid gray 1px;
+    color: white;
     width: 10%;
+    font-size: 1.3rem;
+}
+#task-submit-button:hover{
+    background-color: #2b2f31;
 }
 #task-box{
     display: flex;
@@ -90,8 +151,17 @@
 .task{
     margin: 0.25%;
     font-size: 20px;
+    height: 35px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    border: solid black 0px;
+    border-radius: 7px;
+    background-color: #181a1b;
+    color: whitesmoke;
+}
+.task:hover{
+    background-color: #262a2b;
 }
 .task-button-right-side{
     display: flex;
