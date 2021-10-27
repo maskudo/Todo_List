@@ -89,6 +89,9 @@ export function displayTask(){
     let projectName
     let taskList
 
+    if(!activeProject){
+        return
+    }
     projectName = activeProject.querySelector(".project-button-left-side").textContent
     taskList = TodoList.getTaskList(projectName)
     let content = ""
