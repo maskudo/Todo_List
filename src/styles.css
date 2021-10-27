@@ -56,6 +56,7 @@ footer a:hover{
 }
 #project-name-input-field{
     background-color: #181a1b;
+    padding: 0% 5%;
     color: white;
     font-size: 1.2rem;
     width: 90%;
@@ -65,6 +66,7 @@ footer a:hover{
 }
 #project-submit-button{
     border: solid gray 1px;
+    border-radius: 5px;
     background-color: #181a1b;
     color: white;
     font-size: 1.2rem;
@@ -118,6 +120,7 @@ footer a:hover{
     color: white;
     border: solid gray 1px;
     border-radius: 2px;
+    padding: 0% 1%;
     width: 80%;
     font-size: 1.3rem;
 }
@@ -136,6 +139,7 @@ footer a:hover{
 #task-submit-button{
     background-color: #181a1b;
     border: solid gray 1px;
+    border-radius: 5px;
     color: white;
     width: 10%;
     font-size: 1.3rem;
