@@ -4,6 +4,7 @@ import Project from "./project";
 export default class TodoList{
 
     static projectList = []
+
     static addProject(projectName){
         if(!this.isDuplicate(projectName)){
             this.projectList.push(projectName)
@@ -28,7 +29,17 @@ export default class TodoList{
     static addTask(projectName,task){
         for(let i=0;i<this.projectList.length;i++){
             if(this.projectList[i].getName()===projectName){
-                this.projectList[i].push(task)
+                this.projectList[i].addTask(task)
+            }
+        }
+        localStorage.setItem('projectList',JSON.stringify(this.projectList))
+    }
+    static removeTask(projectName, task){
+    }
+    static getTaskList(projectName){
+        for(let i=0;i<this.projectList.length;i++){
+            if(this.projectList[i].getName() === projectName){
+                return this.projectList[i].getTaskList()
             }
         }
     }
