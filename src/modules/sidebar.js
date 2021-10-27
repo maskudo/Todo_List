@@ -73,7 +73,7 @@ function displayProjects(){
     for(let i=0;i<projectList.length;i++){
         content += `<button class="project">
         <div class="project-button-left-side">${projectList[i].getName()}</div>
-        <div class = "project-button-right-side cross">X</div>
+        <div class = "project-button-right-side cross"><i class="far fa-trash-alt"></i></div>
         </button>
         `
     }

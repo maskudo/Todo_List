@@ -101,7 +101,7 @@ export function displayTask(){
             <div class="task-button-left-side">${taskList[i].title}</div>
             <div class="task-button-right-side">
                 <div>${taskList[i].dueDate}</div>
-                <div class="cross">X</div>
+                <div class="cross"><i class="far fa-trash-alt"></i></div>
             </div>
         </button>
         `
