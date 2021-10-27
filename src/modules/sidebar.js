@@ -1,5 +1,6 @@
 import Project from "./project"
 import TodoList from "./toDo"
+import { displayTask } from "./mainContent"
 
 const sidebar = document.querySelector(".sidebar")
 const projectBox = document.createElement("div")
@@ -9,8 +10,6 @@ export function initSidebar(){
     createProjectForm()
     createHeader()
     displayProjects()
-    // createHome()
-    sidebar.append(projectBox)
 }
 function createHeader(){
     const header = document.createElement("header")
@@ -58,12 +57,16 @@ function setActive(activeButton){
         }
     })
     activeButton.classList.add("active")
+    displayTask()
 }
 
-function buttonAddEventListener(button){
-    button.addEventListener("click",() => {
+function buttonAddEventListener(){
+    const projectButtons = document.querySelectorAll(".project")
+    projectButtons.forEach(button => {
+        button.addEventListener("click",() => {
         setActive(button)
-    })
+        })
+    });
 }
 function displayProjects(){
     const projectList = TodoList.getProjectList()
@@ -76,6 +79,15 @@ function displayProjects(){
         `
     }
     projectBox.innerHTML = content
+    sidebar.append(projectBox)
+    buttonAddEventListener()
+    const activeProject = document.querySelector(".active")
+    if(!activeProject){
+        const firstProject = document.querySelector(".project")
+        if(firstProject){
+            firstProject.classList.toggle("active")
+        }
+    }
 }
 function addProject(){
     const inputField = document.querySelector("#project-name-input-field")
