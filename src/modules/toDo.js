@@ -34,7 +34,13 @@ export default class TodoList{
         }
         localStorage.setItem('projectList',JSON.stringify(this.projectList))
     }
-    static removeTask(projectName, task){
+    static removeTask(projectName, taskNumber){
+        for(let i=0;i<this.projectList.length;i++){
+            if(this.projectList[i].getName() === projectName){
+                this.projectList[i].removeTask(taskNumber)
+                localStorage.setItem('projectList',JSON.stringify(this.projectList))
+            }
+        } 
     }
     static getTaskList(projectName){
         for(let i=0;i<this.projectList.length;i++){
