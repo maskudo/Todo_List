@@ -20,15 +20,6 @@ function createHeader(){
     header.append(h1)
     sidebar.append(header)
 }
-// function createHome(){
-//     const home = document.createElement("button")
-//     home.id = "home"
-//     home.classList.add("project")
-//     home.textContent = "Home"
-//     buttonAddEventListener(home)
-//     setActive(home)
-//     projectBox.append(home)
-// }
 
 function createProjectForm(){
     const form = document.createElement("form")
@@ -67,6 +58,14 @@ function buttonAddEventListener(){
         setActive(button)
         })
     });
+    projectButtons.forEach((project) => {
+        const projectName = project.querySelector(".project-button-left-side").textContent
+        const cross = project.querySelector(".cross")
+        cross.addEventListener("click", () => {
+            TodoList.removeProject(projectName)
+            displayProjects()
+        })
+    })
 }
 function displayProjects(){
     const projectList = TodoList.getProjectList()
@@ -84,8 +83,9 @@ function displayProjects(){
     const activeProject = document.querySelector(".active")
     if(!activeProject){
         const firstProject = document.querySelector(".project")
+        console.log(firstProject)
         if(firstProject){
-            firstProject.classList.toggle("active")
+            firstProject.classList.add("active")
         }
     }
 }
@@ -98,6 +98,5 @@ function addProject(){
     }
     
     const project = new Project(projectName)
-    console.log(project.getName())
     TodoList.addProject(project)
 }
