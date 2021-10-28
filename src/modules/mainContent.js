@@ -1,4 +1,6 @@
 import { format, subDays } from "date-fns"
+import Task from "./task"
+import TodoList from "./toDo"
 const mainContent = document.querySelector(".main-content")
 
 
@@ -7,8 +9,9 @@ today = format(today, "yyyy-MM-dd")
 
 
 export function initMainContent(){
-    createListForm()
+    createAddTaskForm()
     createTaskbox()
+    displayTask()
 }
 
 function createTaskbox(){
@@ -22,42 +25,25 @@ function createTaskbox(){
     mainContent.appendChild(taskBox)
 }
 
-function createListForm(){
+function createAddTaskForm(){
     const form = document.createElement("form")
     form.id = "task-form"
+    form.innerHTML = `
+    <input type="text" name="title" id="task-input-field" placeholder="Enter Task" required minlength="1" maxlength="70">
+    <input type="date" name="deadline" id="task-deadline">
+    <input type="submit" name="submirButton" value="Create" id="task-submit-button">
+    `
+    mainContent.append(form)
 
-    const textField = document.createElement("input")
-    textField.name = "title"
-    textField.type = "text"
-    textField.id = "task-input-field"
-    textField.placeholder = "Enter Task"
-    textField.required = true
-    
-    const deadline = document.createElement("input")
-    deadline.type = "date"
-    deadline.name = "deadline"
-    deadline.id = "task-deadline"
-
-    const submitButton = document.createElement("input")
-    submitButton.name = "submitButton"
-    submitButton.type = "submit"
-    submitButton.value = "Create"
-    submitButton.id = "task-submit-button"
-
+    const submitButton = document.querySelector("#task-submit-button")
     submitButton.addEventListener("click", e => {
         e.preventDefault()
-        createTaskButton()
+        addTaskToProject()
     })
-    
-    form.appendChild(textField)
-    form.appendChild(deadline)
-    form.appendChild(submitButton)
-    mainContent.append(form)
 }
-function createTaskButton(){
+function addTaskToProject(){
     const inputField = document.querySelector("#task-input-field")
     const taskDeadline = document.querySelector("#task-deadline")
-    const taskBox = document.querySelector("#task-box")
     
     const taskTitle = inputField.value 
     if(taskTitle.length === 0 || taskTitle.length>70){
@@ -67,28 +53,74 @@ function createTaskButton(){
     if(!taskDeadline.value){
         taskDeadline.value = today
     }
+    const newTask = new Task(taskTitle, taskDeadline.value)
+    const activeProject = document.querySelector(".active")
+    const projectName = activeProject.querySelector(".project-button-left-side").textContent
+    
+    TodoList.addTask(projectName, newTask)
+    displayTask()
+    // const button = document.createElement("button")
+    // const leftSide = document.createElement("div")
+    // const rightSide = document.createElement("div")
+    // const date = document.createElement("p")
+    // const cross  =document.createElement("button")
 
-    const button = document.createElement("button")
-    const leftSide = document.createElement("div")
-    const rightSide = document.createElement("div")
-    const date = document.createElement("p")
-    const cross  =document.createElement("button")
+    // cross.textContent = "X"
+    // date.textContent = taskDeadline.value
+    // leftSide.textContent = taskTitle
+    // leftSide.classList.add("task-button-left-side")
+    // rightSide.classList.add("task-button-right-side")
+    // button.classList.add("task")
+    // inputField.value = ""
 
-    cross.textContent = "X"
-    date.textContent = taskDeadline.value
-    leftSide.textContent = taskTitle
-    leftSide.classList.add("task-button-left-side")
-    rightSide.classList.add("task-button-right-side")
-    button.classList.add("task")
-    inputField.value = ""
+    // cross.addEventListener("click", () => {
+    //     button.remove()
+    // })
 
-    cross.addEventListener("click", () => {
-        button.remove()
+    // rightSide.appendChild(date)
+    // rightSide.appendChild(cross)
+    // button.appendChild(leftSide)
+    // button.appendChild(rightSide)
+    // taskBox.append(button)
+}
+export function displayTask(){
+    const activeProject = document.querySelector(".active")
+    const taskBox = document.querySelector("#task-box")
+    let projectName
+    let taskList
+
+    if(!activeProject){
+        return
+    }
+    projectName = activeProject.querySelector(".project-button-left-side").textContent
+    taskList = TodoList.getTaskList(projectName)
+    let content = ""
+    for(let i=0;i<taskList.length;i++){
+        content+=`
+        <button class="task" data-number = "${i}">
+            <div class="task-button-left-side">${taskList[i].title}</div>
+            <div class="task-button-right-side">
+                <div>${taskList[i].dueDate}</div>
+                <div class="cross"><i class="far fa-trash-alt"></i></div>
+            </div>
+        </button>
+        `
+    }
+    taskBox.innerHTML = content
+    crossAddEventListener()
+
+}
+
+function crossAddEventListener(){
+    const activeProject = document.querySelector(".active")
+    const projectName = activeProject.querySelector(".project-button-left-side").textContent
+    const tasks = document.querySelectorAll(".task")
+    tasks.forEach((task) => {
+        const cross = task.querySelector(".cross")
+        cross.addEventListener("click",() => {
+            const taskNumber = task.dataset.number
+            TodoList.removeTask(projectName,taskNumber)
+            displayTask()
+        })
     })
-
-    rightSide.appendChild(date)
-    rightSide.appendChild(cross)
-    button.appendChild(leftSide)
-    button.appendChild(rightSide)
-    taskBox.append(button)
 }

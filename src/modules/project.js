@@ -12,4 +12,7 @@ export default class Project{
     removeTask(number){
         this.tasks.splice(number,1)
     }
+    getTaskList(){
+        return this.tasks
+    }
 }

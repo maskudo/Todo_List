@@ -1,3 +1,7 @@
+import Project from "./project"
+import TodoList from "./toDo"
+import { displayTask } from "./mainContent"
+
 const sidebar = document.querySelector(".sidebar")
 const projectBox = document.createElement("div")
 projectBox.id = "project-box"
@@ -5,8 +9,7 @@ projectBox.id = "project-box"
 export function initSidebar(){
     createProjectForm()
     createHeader()
-    createHome()
-    sidebar.append(projectBox)
+    displayProjects()
 }
 function createHeader(){
     const header = document.createElement("header")
@@ -21,39 +24,21 @@ function createHeader(){
 function createProjectForm(){
     const form = document.createElement("form")
     form.id = "project-form"
+    form.innerHTML = `
+    <input type="text" name = "projectName" placeholder="Enter new Project" id = "project-name-input-field" required="true" minlength="3" maxlength="25">
+    <input type="submit" name="submitButton" value="Create" id="project-submit-button">
+    `
+    sidebar.appendChild(form)
 
-    const textField = document.createElement("input")
-    textField.name = "projectName"
-    textField.type = "text"
-    textField.id = "project-name-input-field"
-    textField.placeholder = "Enter New Project"
-    textField.required = true
-
-    const submitButton = document.createElement("input")
-    submitButton.name = "submitButton"
-    submitButton.type = "submit"
-    submitButton.value = "Create"
-    submitButton.id = "project-submit-button"
+    const submitButton = document.querySelector("#project-submit-button")
     submitButton.addEventListener("click",e=>{
         e.preventDefault()
-        createProjectButton()
+        addProject()
+        displayProjects()
     })
-
-    form.appendChild(textField)
-    form.appendChild(submitButton)
-
-    sidebar.appendChild(form)
+    
 }
 
-function createHome(){
-    const home = document.createElement("button")
-    home.id = "home"
-    home.classList.add("project")
-    home.textContent = "Home"
-    buttonAddEventListener(home)
-    setActive(home)
-    projectBox.append(home)
-}
 
 function setActive(activeButton){
     const projectButtons = document.querySelectorAll(".project")
@@ -63,37 +48,55 @@ function setActive(activeButton){
         }
     })
     activeButton.classList.add("active")
+    displayTask()
 }
 
-function buttonAddEventListener(button){
-    button.addEventListener("click",() => {
+function buttonAddEventListener(){
+    const projectButtons = document.querySelectorAll(".project")
+    projectButtons.forEach(button => {
+        button.addEventListener("click",() => {
         setActive(button)
+        })
+    });
+    projectButtons.forEach((project) => {
+        const projectName = project.querySelector(".project-button-left-side").textContent
+        const cross = project.querySelector(".cross")
+        cross.addEventListener("click", () => {
+            TodoList.removeProject(projectName)
+            displayProjects()
+        })
     })
 }
-function createProjectButton(){
-    const inputField = document.querySelector("#project-name-input-field")
-        const projectName = inputField.value 
-        if(projectName.length === 0 || projectBox.length>25){
-            alert("Project name length should be between 1 and 25")
-            return
+function displayProjects(){
+    const projectList = TodoList.getProjectList()
+    let content = ''
+    for(let i=0;i<projectList.length;i++){
+        content += `<button class="project">
+        <div class="project-button-left-side">${projectList[i].getName()}</div>
+        <div class = "project-button-right-side cross"><i class="far fa-trash-alt"></i></div>
+        </button>
+        `
+    }
+    projectBox.innerHTML = content
+    sidebar.append(projectBox)
+    buttonAddEventListener()
+    const activeProject = document.querySelector(".active")
+    if(!activeProject){
+        const firstProject = document.querySelector(".project")
+        console.log(firstProject)
+        if(firstProject){
+            firstProject.classList.add("active")
         }
-        const button = document.createElement("button")
-        const leftSide = document.createElement("div")
-        const rightSide = document.createElement("button")
-
-        leftSide.textContent = `${projectName}`
-        leftSide.className = "project-button-left-side"
-        rightSide.textContent = "X"
-        rightSide.className = "project-button-right-side"
-        rightSide.addEventListener("click", () => {
-            button.remove()
-        })
-
-        button.classList.add("project")
-        buttonAddEventListener(button)
-        inputField.value = ""
-
-        button.append(leftSide)
-        button.append(rightSide)
-        projectBox.append(button)
+    }
+}
+function addProject(){
+    const inputField = document.querySelector("#project-name-input-field")
+    const projectName = inputField.value 
+    if(projectName.length === 0 || projectBox.length>20){
+        alert("Project name length should be between 1 and 20")
+        return
+    }
+    
+    const project = new Project(projectName)
+    TodoList.addProject(project)
 }
